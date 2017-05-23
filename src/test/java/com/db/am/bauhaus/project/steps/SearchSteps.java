@@ -46,20 +46,26 @@ public class SearchSteps {
         theActorCalled(theUser).attemptsTo(Open.browserOn().the(mainSearchPage));
     }
 
-    @When("^he searches for a product from the input box$")
-    public void search_from_input_box() {
-        user.search_from_input_box();
+    @When("^he searches for a \"(.*?)\" from the input box$")
+    public void search_from_input_box(String product) {
+        user.search_from_input_box(product);
     }
+    
+    @When("^he searches for a \"(.*?)\" from the drop down menu$")
+    public void search_from_drop_dowm_menu(String product) {
+        user.search_from_drop_down_menu(product);
+    }
+   
 
     @When("^he searches for a product from the input box \\(screenplay\\)$")
     public void search_from_input_box_screenplay() {
         theActorInTheSpotlight().attemptsTo(SearchFor.randomText());
     }
 
-    @Then("^the result should be displayed$")
-    public void verify_search_result() {
-        user.verify_result_for_top_categories();
-        user.verify_result_for_all_categories();
+    @Then("^the \"(.*?)\" should be displayed$")
+    public void verify_search_result(String search) {
+        user.verify_result_for_top_categories(search);
+        user.verify_result_for_all_categories(search);
     }
 
     @Then("^the result should be displayed \\(screenplay\\)$")
