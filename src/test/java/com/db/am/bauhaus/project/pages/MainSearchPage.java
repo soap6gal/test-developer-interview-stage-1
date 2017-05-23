@@ -12,12 +12,16 @@ import org.openqa.selenium.WebDriver;
  */
 @DefaultUrl("/")
 public class MainSearchPage extends PageObject {
+	
 
     @FindBy(id = "search-query")
     WebElementFacade inputBox;
 
     @FindBy(css = ".btn.btn-orange.btn-append")
     WebElementFacade searchButton;
+    
+    @FindBy(id="catnav-primary-link-1179-link")
+    WebElementFacade navigateMenu;
 
     public MainSearchPage(WebDriver driver) {
         super(driver);
@@ -35,4 +39,8 @@ public class MainSearchPage extends PageObject {
     public String getAllCategoriesHeader() {
         return find(By.cssSelector("h1.conform-heading.display-inline")).getText();
     }
+
+	public void selectDropdown(String menu) {
+      selectFromDropdown(navigateMenu, menu);		
+	}
 }
