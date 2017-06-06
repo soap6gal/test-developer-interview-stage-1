@@ -22,6 +22,12 @@ public class MainSearchPage extends PageObject {
     
     @FindBy(id="catnav-primary-link-1179-link")
     WebElementFacade navigateMenu;
+<<<<<<< HEAD
+=======
+    
+    @FindBy(xpath="//*[@id='content']/div/div/span[2]/div/div/div/div[2]/a/div[1]/picture/img")
+    WebElementFacade jewelleryIcon;
+>>>>>>> subhash
 
     public MainSearchPage(WebDriver driver) {
         super(driver);
@@ -43,4 +49,11 @@ public class MainSearchPage extends PageObject {
 	public void selectDropdown(String menu) {
       selectFromDropdown(navigateMenu, menu);		
 	}
+<<<<<<< HEAD
+=======
+	
+	public void click_jewellery_icon(){
+		jewelleryIcon.click();
+	}
+>>>>>>> subhash
 }

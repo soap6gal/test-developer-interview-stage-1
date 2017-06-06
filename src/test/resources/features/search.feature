@@ -18,7 +18,10 @@ Feature: Sample
     When he searches for a "All Jewellery" from the drop down menu
     Then the "Jewellery" should be displayed
 
-  @ui @wip
+  @ui
   Scenario: Should be able to search for a product from the icons
+  	Given John is viewing the Etsy landing page
+  	When he clicks on Jewellery icon
+  	Then the "Jewellery" should be displayed
 
 

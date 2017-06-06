@@ -12,29 +12,35 @@ import static org.hamcrest.Matchers.containsString;
  */
 public class SearchUser extends ScenarioSteps {
 
-    MainSearchPage mainSearchPage;
+	MainSearchPage mainSearchPage;
 
-   // String searchText = "craft";
+	// String searchText = "craft";
 
-    @Step
-    public void search_from_input_box(String searchText) {
-        mainSearchPage.searchFromInputBox(searchText);
-    }
+	@Step
+	public void search_from_input_box(String searchText) {
+		mainSearchPage.searchFromInputBox(searchText);
+	}
 
-    @Step
-    public void verify_result_for_top_categories(String searchText) {
-        assertThat(mainSearchPage.getTopCategoriesHeader(), containsString(searchText));
-    }
+	@Step
+	public void verify_result_for_top_categories(String searchText) {
+		assertThat(mainSearchPage.getTopCategoriesHeader(), containsString(searchText));
+	}
 
-    @Step
-    public void verify_result_for_all_categories(String searchText) {
-        assertThat(mainSearchPage.getAllCategoriesHeader(), containsString(searchText));
-    }
-    
-    @Step
-    public void search_from_drop_down_menu(String product) {
-        mainSearchPage.selectDropdown(product);
-        
-    
-    }
+	@Step
+	public void verify_result_for_all_categories(String searchText) {
+		assertThat(mainSearchPage.getAllCategoriesHeader(), containsString(searchText));
+	}
+
+	@Step
+	public void search_from_drop_down_menu(String product) {
+		mainSearchPage.selectDropdown(product);
+
+	}
+
+	@Step
+	public void click_jewellery_icon() {
+		mainSearchPage.click_jewellery_icon();
+
+	}
+
 }
