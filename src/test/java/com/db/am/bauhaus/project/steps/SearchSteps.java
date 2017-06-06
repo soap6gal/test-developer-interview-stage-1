@@ -76,4 +76,9 @@ public class SearchSteps {
                 seeThat("the all categories header ", the(SearchTarget.ALL_CATEGORIES_HEADER), containsText(searchText))
         );
     }
+    
+    @When("^he clicks on Jewellery icon$")
+    public void click_jewelery_icon () {
+        user.click_jewellery_icon();
+    }
 }

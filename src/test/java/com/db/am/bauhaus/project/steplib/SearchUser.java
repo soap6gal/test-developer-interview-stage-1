@@ -37,4 +37,10 @@ public class SearchUser extends ScenarioSteps {
         
     
     }
+
+	public void click_jewellery_icon() {
+		mainSearchPage.click_jewellery_icon();
+	
+		
+	}
 }
