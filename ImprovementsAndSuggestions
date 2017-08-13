@@ -1,0 +1,9 @@
+
+
+1. Cannot run on latest browsers versions. Can be updated to Selenium 3 and latest versions of Serenity
+2. CSS selectors can be shortened ex: when class has 2 or 3 words we can just use only for selector
+3. Page wait methods and Element presents methods to be implemented to avoid test flakiness
+4. Rerun failed tests can be implemented
+5. Aggregate reports can be implemented
+6. Can be extended to mobile responsive tests with different screen sizes
+
