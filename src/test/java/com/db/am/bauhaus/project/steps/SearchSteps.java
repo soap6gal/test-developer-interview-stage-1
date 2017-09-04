@@ -70,4 +70,26 @@ public class SearchSteps {
                 seeThat("the all categories header ", the(SearchTarget.ALL_CATEGORIES_HEADER), containsText(searchText))
         );
     }
+
+    @When("^he selects a category from drop-down menu\\(Grid view\\)$")
+    public void he_selects_a_category_from_drop_down_menu(){
+        user.selects_a_category_from_dropdown_menu();
+
+    }
+
+    @Then("^results should be displayed for selected category$")
+    public void results_should_be_displayed_for_selected_category(){
+        user.verify_result_for_category_search_dropdown_grid();
+    }
+
+    @When("^he selects a category from the icon$")
+    public void he_selects_a_category_from_the_icon(){
+        user.selects_a_category_from_icon();
+    }
+
+    @Then("^results should be displayed for selected icon$")
+    public void results_should_be_displayed_for_selected_icon(){
+        user.verify_result_for_category_search_product_icon();
+    }
+
 }
