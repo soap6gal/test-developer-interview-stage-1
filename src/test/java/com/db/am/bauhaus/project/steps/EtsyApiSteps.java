@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.containsString;
 public class EtsyApiSteps {
 
     @Steps
-    private EtsyApiActions etsyApiActions;
+    private EtsyApiActions etsyApiActions; // this should be in steplib. It's a steps library like SearchUser.java
 
     @When("^I search for the keyword (.*)$")
     public void whenIsearchForTheKeyword(String keyword) {
