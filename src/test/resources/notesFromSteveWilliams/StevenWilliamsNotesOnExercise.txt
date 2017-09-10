@@ -1,0 +1,120 @@
+***************************************************************************************************************
+* Task One: implement the remaining two scenarios tagged as @wip in the search.feature file.
+***************************************************************************************************************
+I've never used Serenity and I am not that familiar with Gradle. However, I am familiar with similar tools such
+as Cucumber and Maven, so in order to equip my home machine to run a Gradle project with the Serenity framework
+I was able to modify my machine environment and run an initial test execution on the <master> branch of the project.
+Once I was happy that the project was working on my machine I set out researching SerenityBDD.
+
+The first action I took was to refactor the Input Box test (screenplay), which appeared to me
+to be verifying the wrong thing. I could be wrong, but the test wasn't passing prior to the edit.
+
+The 'serenity.properites' appeared to have an erroneous baseUrl, with an unnecessary "/" at
+the end. This resulted in the page being loaded with "//" at the end due to the @DefaultUrl
+configuration. I simply removed the "/" from the 'webdriver.base.url' property.
+
+I then chose to follow the Screenplay model for the additional scenarios and added the step definitions
+plus supporting classes and locators. I've left 'TO DO' comments regarding making the selection of
+the product icons more general, and with more time I would implement logic that extracts the text
+of the icon prior to clicking it, and setting that text in the session variable. The only reason I've
+left it specific to a particular icon is time, however it could also be argued that each icon could have
+its own action. These tests pass consistently.
+***************************************************************************************************************
+
+***************************************************************************************************************
+* Task Two: implement a few more BDD scenarios for UI and API tests to demonstrate candidates understanding
+***************************************************************************************************************
+I feel the first task covers UI tests in principle, so only added one extra one as a further example.
+
+Rest-assured API tests are another area I am not that familiar on, but the API concept is very similar to other
+API testing models I have more experience with, so I set about researching the format / style of Rest-assured
+API tests and just followed the principles I am familiar with in other models.
+
+One example I have added verifies a GET call (the call that would be sent from a user searching using the
+input box), verifying the response code, and the content of the JSON body in the response. I've chosen to
+parameterize the scenario for future expansion. The difference between this API test and a UI test, apart
+from the driver not being the user, is that it directly calls the API and retrieves the data from the response.
+
+The second example also verifies a GET call for a different '/api' call on the product.
+
+You'll notice I changed the scope of Serenity Rest Assured in the 'build.gradle' file: this was because I felt
+the actions classes I added belonged with the other 'helper' classes such as 'SearchTarget.java'. The case could
+ be made for the actions class(es) to live with the test code, perhaps in the 'steplib' folder, in which case
+ the scope for the dependency could be reverted back to 'testCompile'.
+***************************************************************************************************************
+
+***************************************************************************************************************
+* Task Three: Optional. How to parallelize the test execution.
+***************************************************************************************************************
+I am not that familiar with Gradle (being far more experienced with Maven) however I have
+had a quick look to ascertain the potential method for running tests in parallel. The
+'build.gradle' example below shows what I believe to be an asynchronous task to run the specified
+tests (based on simple regex). I have also looked at projects that use a combination of
+Gradle and Maven, where the 'build.gradle' file is virtually empty and the dependencies
+are handled within the 'pom.xml'. There is a way to run parallel tests via Maven/pom.xml,
+ I have provided an example 'pom.xml' fragment beneath the 'build.gradle' example below.
+
+****************************************************************************
+* Sample 'build.gradle' file with parallel execution configuration example.
+****************************************************************************
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.8.2'
+}
+
+test {
+    if (project.hasProperty('maxParallelForks'))
+        maxParallelForks = project.maxParallelForks as int
+    if (project.hasProperty('forkEvery'))
+        forkEvery = project.forkEvery as int
+}
+
+packages = 10
+tests = 30
+
+task createTests << {
+    (0..packages).each { packageCounter ->
+        def packageName = "gradletest${packageCounter}"
+        (0..tests).each { classCounter ->
+            def testClassName = "Gradle${classCounter}Test"
+            copy {
+                from 'src/templates'
+                into 'src/test/java'
+                expand([packageName: packageName, testClassName: testClassName])
+                rename '(.*).java', packageName + '/' + testClassName + '.java'
+                include 'SampleTest.java'
+            }
+        }
+    }
+}
+****************************************************************************
+
+****************************************************************************
+* Sample pom.xml fragment showing parallel execution configuration example.
+****************************************************************************
+<plugins>
+[...]
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.20</version>
+    <configuration>
+        <forkCount>3</forkCount>
+        <reuseForks>true</reuseForks>
+        <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+        <systemPropertyVariables>
+            <databaseSchema>MY_TEST_SCHEMA_${surefire.forkNumber}</databaseSchema>
+        </systemPropertyVariables>
+        <workingDirectory>FORK_DIRECTORY_${surefire.forkNumber}</workingDirectory>
+    </configuration>
+  </plugin>
+[...]
+</plugins>
+****************************************************************************
+
+EOF
